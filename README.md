@@ -67,7 +67,7 @@ Ulep self/
 ├── app.js
 ├── package.json
 └── package-lock.json
-
+```
 
 ## 🚀 Getting Started
 Follow these steps to run ULEP on your local machine:
