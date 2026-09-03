@@ -1,0 +1,113 @@
+<% layout('layouts/boilerplate.ejs') -%>
+<style>
+    .light-match-hero-bg {
+        background-color: #f8f9fa; /* Pure light/white grey jo stripe se blend hoga */
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    .soft-blue-glow {
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(13, 110, 253, 0.08) 0%, rgba(13, 110, 253, 0) 70%);
+        filter: blur(50px);
+        pointer-events: none;
+    }
+    .main-hero-title {
+        font-weight: 800;
+        letter-spacing: -1px;
+    }
+    .ulep-clean-subtitle {
+        color: #4a5568; /* Solid slate grey for perfect readability */
+        max-width: 700px;
+        line-height: 1.6;
+        font-size: 1.15rem !important;
+    }
+    .indicator-l { color: #0d6efd; font-weight: 700; }
+    .indicator-e { color: #198719; font-weight: 700; }
+    .indicator-p { color: #0dcaf0; font-weight: 700; }
+    .typewriter-cursor {
+        color: #0d6efd;
+        animation: blinkCursor 0.8s step-end infinite;
+    }
+    @keyframes blinkCursor {
+        from, to { color: transparent }
+        50% { color: #0d6efd; }
+    }
+    .Guid { margin-top: 1.8rem; }
+    @keyframes shadowChange {
+        0% {
+            box-shadow: 2px 2px 10px #a2cdf7; /* Light Gray */
+        }
+        25% {
+            box-shadow: 2px 2px 10px #73ff7a; /* Soft Light Blue */
+        }
+        50% {
+            box-shadow: 2px 2px 10px #fe4de1; /* Soft Purple */
+        }
+        75% {
+            box-shadow: 2px 2px 10px #ff7878; /* Soft Green */
+        }
+        100% {
+            box-shadow: 2px 2px 10px #a2cdf7; /* Wapas original Light Gray par */
+        }
+    }
+    .ai-chat{
+        animation: shadowChange 8s ease-in-out infinite;
+    }
+</style>
+<main>
+    <div class="container-fluid d-flex align-items-center justify-content-center position-relative overflow-hidden light-match-hero-bg" style="min-height: calc(100vh - 56px);">
+        <div class="position-absolute top-50 start-50 translate-middle rounded-circle soft-blue-glow"></div>
+        <div class="container text-center position-relative" style="z-index: 2;">
+            <h1 class="display-2 fw-extrabold tracking-tight m-0 text-dark main-hero-title">
+                <span id="dynamic-typewriter"></span><span class="typewriter-cursor">|</span>
+            </h1>
+            <p class="mt-4 mx-auto fs-5 fw-normal ulep-clean-subtitle">
+            Universal / University / Umaid's 
+            <span class="indicator-l">L</span>earning and 
+            <span class="indicator-e">E</span>arning 
+            <span class="indicator-p">P</span>latform for students
+            </p>
+            <div class="Guid mt-4.5 d-flex gap-3 justify-content-center flex-wrap">
+                <a href="/ulep/edit-profile/<%= username %>" class="btn btn-outline-primary px-4 py-2.5 rounded-pill fw-bold shadow-sm">🎯 Create Profile</a>
+                <a href="" class="btn btn-outline-warning px-4 py-2.5 rounded-pill fw-semibold">📢 U-LEP Guide!</a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    const textSequences = ["U-LEP", "By UmaidIqbal"];
+    const typewriterTarget = document.getElementById("dynamic-typewriter");
+    const typingSpeed = 150;
+    const erasingSpeed = 100;
+    const delayBetweenWords = 2000;
+    let sequenceIndex = 0;
+    let charIndex = 0;
+    let isErasing = false;
+
+    function triggerTypewriterEngine() {
+        const currentFullText = textSequences[sequenceIndex];
+        if (!isErasing) {
+            typewriterTarget.textContent = currentFullText.substring(0, charIndex + 1);
+            charIndex++;
+            if (charIndex === currentFullText.length) {
+                isErasing = true;
+                setTimeout(triggerTypewriterEngine, delayBetweenWords);
+                return;
+            }
+        } else {
+            typewriterTarget.textContent = currentFullText.substring(0, charIndex - 1);
+            charIndex--;
+            if (charIndex === 0) {
+                isErasing = false;
+                sequenceIndex = (sequenceIndex + 1) % textSequences.length;
+            }
+        }
+        const currentSpeed = isErasing ? erasingSpeed : typingSpeed;
+        setTimeout(triggerTypewriterEngine, currentSpeed);
+    }
+    document.addEventListener("DOMContentLoaded", () => {
+        setTimeout(triggerTypewriterEngine, 500);
+    });
+</script>
+

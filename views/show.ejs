@@ -1,0 +1,145 @@
+<% layout('layouts/show-layout.ejs') -%>
+<main>
+    <div class="showjob-to-worker p-4">
+        <div class="title-amount-deadline text-center">
+            <h2><%= job.title %></h2>
+            <p><span>amount:&nbsp;<%= job.amount %>₹&nbsp;&nbsp;</span>|<span>&nbsp;&nbsp;type:&nbsp;<%= job.type %>&nbsp;&nbsp;</span>|<span class="text-primary">&nbsp;&nbsp;Deadline:&nbsp;<%= new Date(job.deadline).toDateString() %></span></p>
+        </div><hr>
+        <p>Posted by: <a href="/ulep/profile/<%= job.postedBy.username %>" class="text-decoration-none">@<%= job.postedBy.username %></a></p>
+        <% if (job.assignee !== null){ %>
+            <p>Assigned to: <a href="/ulep/profile/<%= job.assignee.username %>" class="text-decoration-none">@<%= job.assignee.username %></a> </p>
+        <% }else{ %>
+            <p>Assigned to: -- </p>
+        <% } %>
+        <p><%= job.shortDescription %></p>
+        <p><%= job.briefDescription %></p>
+        <% job.upload.forEach((fileName, index) => { %>
+            <a href="/uploads/<%= fileName %>" target="_blank" class="btn btn-outline-primary d-inline-flex align-items-center gap-2">Doc</a>
+        <% }) %>
+    </div><hr>
+    <% if (usernameByQuery === usernameBySession && job.assignee === null){ %>
+        <div class="interested-applicants ps-4 pe-4" >
+            <h3 class="mb-2">Interested Applicants</h3>
+            <% if (firstchats && firstchats.length > 0){ %>
+                <% for (firstchat of firstchats){ %>
+                    <div class="applicant card p-2">
+                        <form action="/ulep/show/assign/<%= firstchat.sender.username %>/<%= job._id %>" class="d-inline-block" method="POST">
+                            <div class="input-group">
+                                <a href="" class="text-decoration-none">@<%= firstchat.sender.username %></a>
+                                <button class="btn btn-primary btn-sm ms-auto d-inline" type="submit">Assign</button>
+                            </div>
+                        </form>
+                            <p><%= firstchat.body %></p>
+                        </div>
+                <% } %>
+            <% }else{ %>
+                <p class="text-muted">No Applicant's Yet</p>
+            <% } %>
+        </div><hr>
+    <% } %>
+    <% if (usernameByQuery === usernameBySession && job.assign !== null && job.qr !== null && job.completeWork){ %>
+        <div class="payment-ss ps-4 pe-4">
+            <h3>Upload Payment Screenshot:</h3>
+            <form action="/ulep/show/ss/<%= usernameByQuery %>/<%= job._id %>" method="POST" enctype="multipart/form-data">
+                <div class="input-group">
+                    <input type="file" class="form-control" name="ss" required>
+                    <button class="btn btn-danger btn-sm">Send</button>
+                </div> 
+            </form>
+        </div><hr>
+        <div class="work-submittedby-worker ps-4 pe-4 mb-2">
+            <h3>Work Submitted By worker</h3>
+            <% job.completeWork.forEach((fileName, index) => { %>
+                <a href="/uploads/<%= fileName %>" target="_blank" class="btn btn-outline-primary d-inline-flex align-items-center gap-2">Doc</a> &nbsp;&nbsp;&nbsp;
+            <% }) %><br><br>
+            <label for="" class="text-muted">Qr for Payment:</label><br>
+            <img src="/uploads/<%= job.qr %>" alt="" class="img-fluid img-thumbnail" style="width: 100px; height: 100px;"> <hr>
+        </div>
+    <% } %>
+    
+    <% if (usernameByQuery === usernameBySession){ %>
+        <% if (job.messages.length !== 0){ %>
+            <div class="message-poster ps-4 pe-4 mb-2">
+                <form action="/ulep/show/<%= usernameByQuery %>/<%= job._id %>/by-poster" method="POST">
+                    <h3 class="mb-2">Reply to an Applicant</h3>
+                    <select class="form-select mb-2" aria-label="Default select example" name="to">
+                        <option disabled selected>@username</option>
+                        <% if (firstchats && firstchats.length > 0){ %>
+                            <% for (firstchat of firstchats){ %>
+                                <option value="<%= firstchat.sender.username %>">@<%= firstchat.sender.username %></option>
+                            <% } %>
+                        <% }%>
+                    </select>
+                    <textarea name="body" id="poster-message" class="form-control mb-2" row="3" placeholder="can you explain how will you complete this work if i like your method then i will assign this task to you." required></textarea>
+                    <button type="submit" class="btn btn-primary btn-sm">Send</button>
+                </form>
+            </div><hr>
+        <% } %>
+    <% } %>
+    
+        
+    <% if (usernameByQuery !== usernameBySession){ %>
+        <% if (job.ss !== null && job.deleteAt === null){ %>
+            <div class="ps-4 pe-4">
+                <h3>Payment Receipt from Poster:</h3><br>
+                <a href="/uploads/<%= job.ss %>" class="btn btn-outline-primary btn-sm">Doc</a> &nbsp;&nbsp;
+                <form action="/ulep/show/<%= usernameByQuery %>/<%= job._id %>/complete" method="POST" style="display: inline;">
+                    <button type="submit" 
+                            class="btn btn-outline-success btn-sm"
+                            onclick="return confirm('Do you want to mark it as complete? After marking it as completed it will be deleted from the website after 24 hours.');">
+                        Mark as Complete
+                    </button>
+                </form>
+            </div><hr>
+         <% } %>
+        <div class="meassage-section ps-4 pe-4 mb-4">
+            <div class="msg-heading-btn d-flex align-items-center mb-2">
+                <h3 class="d-inline-block">Apply/Message on this Post</h3>
+            </div>
+            <div class="type-msg">
+                <form action="/ulep/show/<%= usernameByQuery %>/<%= job._id %>/to-poster" method="POST">
+                    <textarea name="body" id="message" row="3" class="form-control mb-2" required></textarea>
+                    <input type="text" class="d-none" name="sender" value=<%= usernameBySession%>>
+                    <button type="submit" class="btn btn-primary btn-sm">Send</button>
+                </form>
+                <% if (job.assignee !== null){ %>
+                    <% if (usernameBySession === job.assignee.username && job.ss === null){ %>
+                        <hr>
+                        <h3>Submit Completed work</h3>
+                        <form action="/ulep/show/<%= job.postedBy.username %>/<%= job._id %>/workSubmission" method="POST" enctype="multipart/form-data">
+                            <div class="upload-files mb-3">
+                                <label class="form-label small text-muted fw-semibold">Upload completed work:</label>
+                                <input class="form-control" name="completeWork" type="file" id="complete-work" multiple>
+                                <label class="form-label small text-muted fw-semibold">Upload QR:</label>
+                                <input class="form-control" name="qr" type="file" id="qr" single><br>
+                                <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                            </div>
+                        </form><hr>
+                    <% } %>
+                <% } %>
+                <!-- <form action="" method="POST">
+                    <label for="" class="d-inline">Is Payment Recieved?</label>
+                    <select name="payment-confirmation" id="payment-confirmation">
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </form> -->
+            </div>
+        </div><hr>
+    <% } %>
+    <div class="conversation ps-4 pe-4">
+        <h3 class="mb-2">Conversation</h3>
+        <% if (job.messages.length === 0){ %>
+            <p>No messages yet</p>
+        <% } %>
+        <% for (message of job.messages){ %>
+            <div class="applicant card p-2">
+                <a href="" class="text-decoration-none">@<%= message.sender.username %></a>
+                <p><%= message.body %></p>
+            </div>
+        <% } %>
+    </div>
+</main>
+
+
+

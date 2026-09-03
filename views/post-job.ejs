@@ -1,0 +1,52 @@
+<% layout('layouts/boilerplate.ejs') -%>
+    <div class="post-job bg-light m-3 ">
+        <div class="post-job-card">
+            <div class="text-center mb-4">
+                <h2 class="fw-extrabold" style="font-weight: 800; letter-spacing: 0.5px;">
+                    <span style="color: var(--tech-blue);">U-LEP</span> Hub
+                </h2>
+                <p class="text-muted small">Create Your Post</p>
+            </div>
+            <form action="/ulep/post-job/<%= username %>" method="POST" enctype="multipart/form-data">
+                <div class="row g-3 mb-3">
+                    <div class="job-tile col-md-8">
+                        <label class="form-label small text-muted fw-semibold">Post Title</label>
+                        <input type="text" class="form-control" name="title" placeholder="e.g: Assignemnt writing / video editing etc" required>
+                    </div>
+                    <div class="job-deadline col-md-4">
+                        <label class="form-label small text-muted fw-semibold">Deadline</label>
+                        <input type="Date" class="form-control" name="deadline" required>
+                    </div>
+                </div>
+                <div class="short-description mb-2">
+                    <label class="form-label small text-muted fw-semibold">Short Description (140 characters including spaces)</label>
+                    <textarea class="form-control" name="shortdescription" id="short-description" placeholder="e.g: this asignment will be of appprox 10 pages and i want it hand written" rows="2" maxlength="140" required></textarea>
+                </div>
+                <div class="brief-description mb-2">
+                    <label class="form-label small text-muted fw-semibold">Brief Description</label>
+                    <textarea class="form-control" name="briefdescription" id="brief-description" placeholder="e.g: i need a best handwriting person. this asignment will be of appprox 10 pages and i want it hand written. write write on one side of the page and keep another side empty. make proper formating and professional look. format should be :1)Title. 2)index etc " rows="5" required></textarea>
+                </div>
+                <div class="upload-files mb-3">
+                    <label class="form-label small text-muted fw-semibold">Upload files:</label>
+                    <input class="form-control" type="file" name="upload" id="upload-files" multiple>
+                </div>
+                <div class="row g-3 mb-3">
+                    <div class="amount col-md-7">
+                        <label class="form-label small text-muted fw-semibold">Amount (in Rupees (₹)):</label>
+                        <input class="form-control" type="number" name="amount" id="amount" required>
+                    </div>
+                    <div class="select-type col-md-5">
+                        <label class="form-label small text-danger fw-semibold">Select type</label>
+                        <select class="form-select" aria-label=".form-select-sm example" name="type">
+                            <option selected value="per-page">Per-Page</option>
+                            <option value="for-whole-task">for whole Task</option>
+                            <option value="free">Free</option>
+                            <option value="other">other</option>
+                        </select>
+                    </div>
+                </div>
+                    
+                <button type="submit" class="btn w-100 btn-primary fw-semibold ">Submit</button>
+            </form>
+        </div>
+    </div>

@@ -1,0 +1,53 @@
+<% layout('layouts/boilerplate.ejs') -%>
+<main>
+    <div class="auth-wrapper bg-light m-3 ">
+        <div class="signup-card">
+            <div class="text-center mb-4">
+                <h2 class="fw-extrabold" style="font-weight: 800; letter-spacing: 0.5px;">
+                    <span style="color: var(--tech-blue);">U-LEP</span> Hub User Profile
+                </h2>
+                <p>
+                    <span class="text-danger">red</span>&nbsp;:You can't Edit &nbsp;&nbsp;
+                    <span class="text-success">Green</span>&nbsp;:You can Edit
+                </p>
+            </div><hr>
+            <form action="/ulep/edit-profile/<%= user.username %>" method="POST">
+                <div class="name-username-display row g-3 mb-1">
+                    <div class="name-display col-md-7">
+                        <label class="form-label small text-danger fw-semibold">Full Name</label>
+                        <div class="name form-control"><%= user.name %></div>
+                    </div>
+                    <div class="username-display col-md-5">
+                        <label class="form-label small text-danger fw-semibold">Username</label>
+                        <div class="username form-control">@<%= user.username %></div>
+                    </div>
+                </div>
+                <div class="email-college-display row g-3 mb-1">
+                    <div class="name-display col-md-4">
+                        <label class="form-label small text-danger fw-semibold">email</label>
+                        <div class="email form-control"><%= user.email %></div>
+                    </div>
+                    <div class="username-display col-md-8">
+                        <label class="form-label small text-danger fw-semibold">College</label>
+                        <div class="college form-control"><%= user.collegeName %></div>
+                    </div>
+                </div>
+                <div class="branch-currentyear-display row g-3 mb-1">
+                    <div class="branch-display col-md-6">
+                        <label class="form-label small text-danger fw-semibold">Branch</label>
+                        <div class="branch form-control"><%= user.branch %></div>
+                    </div>
+                    <div class="currentyear-display col-md-6">
+                        <label class="form-label small text-success fw-semibold">Current Year</label>
+                        <input type="text" name="currentYear" class="currentyear form-control" value=<%= user.currentYear %>>
+                    </div>
+                </div>
+                <div class="about-display mb-3">
+                    <label class="form-label small text-success fw-semibold">About</label>
+                    <textarea class="about form-control" name="about"><%= user.about %></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Save</button>
+            </form>
+        </div>
+    </div>
+</main>

@@ -1,0 +1,27 @@
+<% layout('layouts/boilerplate.ejs') -%>
+<main>
+    <% if (jobs && jobs.length){ %>
+        <div class="row p-3">
+            <% for (job of jobs){ %>
+                <% if (job.assignee === null){ %>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="card mb-2">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title text-danger"><%= job.title %></h5>
+                                <p>by:<a class="navbar-brand fs-6 text-muted" href="/ulep/profile/<%= job.postedBy.username %>">@<i><%= job.postedBy.username %></i></a></p>
+                                <p>Messages:&nbsp;<%= job.messages.length %></p>
+                                <p>deadline: <%= new Date(job.deadline).toDateString() %></p>
+                                <p class="card-text short-description text-truncate d-block mb-3"><%= job.shortDescription %></p>
+                                <a href="/ulep/show/<%= job.postedBy.username %>/<%= job._id %>" class="btn btn-primary">See Details</a>
+                            </div>
+                        </div>
+                    </div> 
+                <% } %>
+            <% } %>
+        </div>
+    <% }else{ %>
+        <div class="d-flex justify-content-center align-items-center" style="height: calc(100vh - 56px);">
+            <p class="fs-4 text-muted">There is no task Uploaded Yet!</p>
+        </div>
+    <% } %>
+</main>

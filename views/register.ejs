@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div class="auth-wrapper bg-light m-3 ">
+        <div class="signup-card">
+            <div class="text-center mb-4">
+                <h2 class="fw-extrabold" style="font-weight: 800; letter-spacing: 0.5px;">
+                    Join <span style="color: var(--tech-blue);">U-LEP</span> Hub
+                </h2>
+                <p class="text-muted small">Setup your Account</p>
+            </div>
+            <form action="/ulep/register" method="POST">
+                <div class="row g-3 mb-3">
+                    <div class="col-md-8">
+                        <label class="form-label small text-muted fw-semibold">Full Name</label>
+                        <input type="text" name="name" class="form-control" placeholder="Enter full name" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label small text-muted fw-semibold">Gender</label>
+                        <select name="gender" class="form-select" required>
+                            <option value="" disabled selected>Select</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small text-muted fw-semibold">Choose Username</label>
+                    <div class="input-group">
+                        <span class="input-group-text" style="background: #0f172a; border: 1px solid var(--border-slate); color: #64748b;">@</span>
+                        <input type="text" name="username" class="username form-control" placeholder="unique_username" pattern="^\S+$" title="spaces not allowed!" onkeypress="if(event.key === ' ') return false;" oninput="this.value = this.value.replace(/\s/g, '');" required>
+                        <button class="checkUserName btn btn-primary btn-sm" type="button" onclick="checkUserName()">Check</button>
+                    </div>
+                    <p class="warn text-danger text-success"></p>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small text-muted fw-semibold">Email Address</label>
+                    <div class="input-group mb-3">
+                        <input type="email" name="email" class="form-control email" placeholder="student@university.edu" required disabled>
+                        <button class="btn btn-danger sendotp-btn" type="button" onclick= emailLog() disabled>Send OTP</button>
+                    </div>
+                    <div class="otp-input-group input-group mb-3 w-100 d-none">
+                        <input type="text" inputmode="numeric" name="otp" class="form-control" id="otp-input" placeholder="000000" maxlength="6" autocomplete="one-time-code">
+                        <button class="btn btn-success varify-otp" type="button" onclick="varifyOtp()">Varify OTP</button>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small text-muted fw-semibold">College Name</label>
+                    <input type="text" name="collegeName" class="form-control" placeholder="e.g. MMANTC, Malegaon" required>
+                </div>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label small text-muted fw-semibold">Academic Branch</label>
+                        <select name="branch" class="form-select" required>
+                            <option value="AI-DS" selected>AI & Data Science</option>
+                            <option value="Computer">Computer Eng.</option>
+                            <option value="Mechanical">Mechanical Eng.</option>
+                            <option value="Civil">Civil Eng.</option>
+                            <option value="Other">Other Dept.</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small text-muted fw-semibold">Current Academic Year</label>
+                        <select name="currentYear" class="form-select" required>
+                            <option value="" disabled selected>Select Year</option>
+                            <option value="1st Year (FE)">1st Year (FE)</option>
+                            <option value="2nd Year (SE)">2nd Year (SE)</option>
+                            <option value="3rd Year (TE)">3rd Year (TE)</option>
+                            <option value="4th Year (BE)">4th Year (BE)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-group mb-4">
+                    <input type="password" id="registerPasswordInput" name="password" class="form-control" placeholder="min 8 characters" minlength="8" required style="border-top-right-radius: 0px !important; border-bottom-right-radius: 0px !important;">
+                    <button class="btn btn-outline-secondary" 
+                            type="button" 
+                            style="background-color: var(--bg-dark); border: 1px solid var(--border-slate); border-left: none; color: #64748b; border-top-right-radius: 10px; border-bottom-right-radius: 10px;">
+                        <i class="bi bi-eye" id="toggleLoginEyeIcon"></i>
+                    </button>
+                </div>
+                <button type="submit" class="submit btn w-100 btn-primary fw-semibold " disabled>Submit</button>
+            </form>
+            <div class="text-center mt-4 small text-muted">
+                Already registered? <a href="/ulep/login" class="text-decoration-none fw-semibold">Sign In</a>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/js/functions.js"></script>
+</body>
+</html>
