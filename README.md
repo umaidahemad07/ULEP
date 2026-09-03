@@ -89,12 +89,12 @@ npm install
 Create a .env file in the root directory (refer to .env.example):
 
 Code snippet
-PORT=3000
-MONGO_URI=your_mongodb_connection_string
-SESSION_SECRET=your_session_secret_key
-JWT_SECRET=your_jwt_secret
-EMAIL_USER=your_email@gmail.com
-EMAIL_PASS=your_app_password
+PORT=4000 /n
+MONGO_URI=your_mongodb_connection_string /n
+SESSION_SECRET=your_session_secret_key /n
+JWT_SECRET=your_jwt_secret /n
+EMAIL_USER=your_email@gmail.com  /n
+EMAIL_PASS=your_app_password  /n
 
 ### 5. Start the Application
 
@@ -105,6 +105,6 @@ Or with nodemon (if installed):
 nodemon app.js
 Open your browser and navigate to:
 
-http://localhost:3000
-📄 License
+http://localhost:4000 \n 
+📄 License \n
 This project is open-source and available under the MIT License.
