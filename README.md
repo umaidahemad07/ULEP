@@ -78,11 +78,11 @@ Node.js installed
 MongoDB running locally or a MongoDB Atlas URI
 
 ### 2. Clone the Repository
-Bash
+
 git clone repo_url
 
 ### 3. Install Dependencies
-Bash
+
 npm install
 
 ### 4. Environment Setup
@@ -97,12 +97,12 @@ EMAIL_USER=your_email@gmail.com
 EMAIL_PASS=your_app_password
 
 ### 5. Start the Application
-Bash
+
 node app.js
 Or with nodemon (if installed):
 
-Bash
-npx nodemon app.js
+
+nodemon app.js
 Open your browser and navigate to:
 
 http://localhost:3000
