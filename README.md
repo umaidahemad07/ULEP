@@ -89,8 +89,7 @@ npm install
 Create a .env file in the root directory (refer to .env.example):
 
 Code snippet
-PORT=4000
-
+PORT=4000  
 MONGO_URI=your_mongodb_connection_string
 
 SESSION_SECRET=your_session_secret_key
