@@ -89,31 +89,19 @@ npm install
 Create a .env file in the root directory (refer to .env.example):
 
 Code snippet
-PORT=4000  
-MONGO_URI=your_mongodb_connection_string
+PORT=3000  
+MONGO_URI=your_mongodb_connection_string  
+SESSION_SECRET=your_session_secret_key  
+JWT_SECRET=your_jwt_secret   
+EMAIL_USER=your_email@gmail.com    
+EMAIL_PASS=your_app_password   
 
-SESSION_SECRET=your_session_secret_key
+### 5. Start the Application  
+node app.js  
+Or with nodemon (if installed):  
 
-JWT_SECRET=your_jwt_secret 
+nodemon app.js  
+Open your browser and navigate to: http://localhost:4000  
 
-EMAIL_USER=your_email@gmail.com  
-
-EMAIL_PASS=your_app_password  
-
-
-### 5. Start the Application
-
-node app.js
-
-Or with nodemon (if installed):
-
-
-nodemon app.js
-
-Open your browser and navigate to:
-
-http://localhost:4000
-
-📄 License
-
+📄 License  
 This project is open-source and available under the MIT License.
