@@ -23,7 +23,7 @@ Instead of a closed bidding system, ULEP follows a **GitHub-style open contribut
   - Integrated with `node-cron` to automatically delete completed jobs after **24 hours**, keeping the database clean and active.
 
 - **Authentication & Security:**
-  - Continuous 34-hour session persistence via `express-session` (no repeated re-logins).
+  - Continuous 24-hour session persistence via `express-session` (no repeated re-logins).
   - Email verification powered by `nodemailer`, `crypto`, and `jsonwebtoken`.
   - Secure profile and document file handling using `multer`.
   - Route protection middleware ensuring authentic user access across endpoints.
